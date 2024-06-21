@@ -1,5 +1,5 @@
-import logo from '@/assets/images/genAI_logo.jpeg'
-import logoDark from '@/assets/images/genAI_logo.jpeg'
+import logo from '@/assets/images/logostudio.png'
+import logoDark from '@/assets/images/logostudio_dark.png'
 
 import { useSelector } from 'react-redux'
 
