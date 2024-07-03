@@ -1,6 +1,7 @@
 import { BaseMessage } from '@langchain/core/messages'
 import { BufferMemory, BufferWindowMemory, ConversationSummaryMemory, ConversationSummaryBufferMemory } from 'langchain/memory'
 import { Moderation } from '../nodes/moderation/Moderation'
+import { AttributeInfo } from 'langchain/schema/query_constructor'
 
 /**
  * Types
@@ -224,6 +225,8 @@ export interface IDocument<Metadata extends Record<string, any> = Record<string,
 import { PromptTemplate as LangchainPromptTemplate, PromptTemplateInput } from '@langchain/core/prompts'
 import { VectorStore } from '@langchain/core/vectorstores'
 import { Document } from '@langchain/core/documents'
+import { BaseLanguageModel } from '@langchain/core/language_models/base'
+import { BaseTranslator } from '@langchain/core/structured_query'
 
 export class PromptTemplate extends LangchainPromptTemplate {
     promptValues: ICommonObject
@@ -269,6 +272,36 @@ export class VectorStoreRetriever {
         this.name = fields.name
         this.description = fields.description
         this.vectorStore = fields.vectorStore
+    }
+}
+
+export interface SelfQueryingRetrieverInput {
+    name: string
+    description: string
+    vectorStore: VectorStore
+    model: BaseLanguageModel
+    documentContents: string
+    attributeInfos: AttributeInfo[]
+    structuredQueryTranslator: BaseTranslator
+}
+
+export class SelfQueryingRetriever {
+    name: string
+    description: string
+    vectorStore: VectorStore
+    model: BaseLanguageModel
+    documentContents: string
+    attributeInfos: AttributeInfo[]
+    structuredQueryTranslator: BaseTranslator
+
+    constructor(fields: SelfQueryingRetrieverInput) {
+        this.name = fields.name
+        this.description = fields.description
+        this.vectorStore = fields.vectorStore
+        this.model = fields.model
+        this.documentContents = fields.documentContents
+        this.attributeInfos = fields.attributeInfos
+        this.structuredQueryTranslator = fields.structuredQueryTranslator
     }
 }
 
